@@ -1,0 +1,7 @@
+.player-title-container {
+    border: 2px rgb(0, 0, 0) solid;
+    text-align: center;
+    font-size: 100%;
+    height:30px;
+    top: 10px;
+}

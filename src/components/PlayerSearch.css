@@ -1,0 +1,13 @@
+.player-search {
+    display: block;
+    position: relative;
+    padding-top: 1EM;
+    border-bottom: 2px solid;
+    height: 4EM;
+
+    .player-search-input {
+        line-height: 1.5EM;
+        padding: 8px;
+        width: 25%;
+    }
+}

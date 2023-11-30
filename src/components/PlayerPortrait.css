@@ -1,0 +1,27 @@
+.player-portrait {
+    display: inline-block;
+
+    .player-portrait-image {
+        width: 4EM;
+        border: 0.25EM solid #555;
+        float: left;
+    }
+
+    .player-info {
+        background-color: white;
+        opacity: 1;
+        width: 25EM;
+        float: left;
+        border: 0.25EM solid #555;
+        height: 6EM;
+
+        .player-name {
+            padding-top: 1.5EM;
+        }
+    }
+
+    :hover {
+        background-color: #45818c;
+    }
+}
+
