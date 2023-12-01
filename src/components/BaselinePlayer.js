@@ -2,6 +2,7 @@ import "./BaselinePlayer.css";
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {setRollingStats} from "../features/rollingStats/rollingStatsSlice";
+import fourBases from "../request.js";
 
 const BaselinePlayer = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const BaselinePlayer = () => {
   }
 
   const compareToBaseline = () => {
-    return fetch("http://localhost:3000/players/" + activePlayer.info.playerId + "/compare_to_baseline?baseline_id=" + baselinePlayer.info.playerId)
+    return fourBases("/players/" + activePlayer.info.playerId + "/compare_to_baseline", {baseline_id: baselinePlayer.info.playerId})
         .then(response => response.json())
         .then((data) => {
           dispatch(setRollingStats(data.comparison));

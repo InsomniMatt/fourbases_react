@@ -5,6 +5,7 @@ import { setActive } from '../features/activePlayer/activePlayerSlice';
 import SearchResults from './SearchResults';
 import PlayerCard from './PlayerCard';
 import "./PlayerSearch.css";
+import fourBases from "../request.js";
 
 const PlayerSearch = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const PlayerSearch = () => {
   }
 
   const searchPlayerApi = (playerName) => {
-    return fetch("http://localhost:3000/players/search?search=" + playerName)
+    return fourBases("/players/search", {query: playerName})
         .then(response => response.json())
         .then((data) => {
           let searchResults = data?.players || [];

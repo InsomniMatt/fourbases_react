@@ -4,6 +4,8 @@ import { Line } from "react-chartjs-2";
 import {useDispatch, useSelector} from 'react-redux';
 import {setRollingStats} from "../features/rollingStats/rollingStatsSlice";
 import "./Chart.css";
+import fourBases from "../request.js";
+
 Chart.register(...registerables)
 
 const LineGraph = ({player}) => {
@@ -19,7 +21,7 @@ const LineGraph = ({player}) => {
 
   useEffect(() => {
     const fetchData = async() => {
-      return await fetch("http://localhost:3000/players/" + player.info.playerId + "/rolling_stats")
+      return await fourBases("/players/" + player.info.playerId + "/rolling_stats")
           .then(response => response.json())
           .then((data) => {
             dispatch(setRollingStats(data.rolling_stats));
