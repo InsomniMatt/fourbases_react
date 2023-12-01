@@ -3,6 +3,7 @@ import PlayerPortrait from './PlayerPortrait';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActive } from '../features/activePlayer/activePlayerSlice';
 import "./SearchResults.css";
+import fourBases from "../request.js";
 
 const SearchResults = ({results, clearResults}) => {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const SearchResults = ({results, clearResults}) => {
 
   const playerSelect = (event) => {
     const playerId = event.currentTarget.attributes.player_id.value;
-    return fetch("http://localhost:3000/players/" + playerId + "/stats")
+    return fourBases("/players/" + playerId + "/stats")
         .then(response => response.json())
         .then((playerData) => {
           dispatch(setActive(playerData));
