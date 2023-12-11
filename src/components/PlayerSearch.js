@@ -10,12 +10,15 @@ import fourBases from "../request.js";
 const PlayerSearch = () => {
   const dispatch = useDispatch();
   const activePlayer = useSelector((state) => state.activePlayer.value);
-  let [searchValue, setSearchValue] = useState(null);
+  let [searchValue, setSearchValue] = useState("");
   let [results, setResults] = useState([]);
   let debouncedSearchValue = useDebounce(searchValue, 300);
 
   const handleChange = (e) => {
     setSearchValue(e.currentTarget.value);
+    if (e.currentTarget.value == "") {
+      clearResults();
+    }
   }
 
   const searchPlayerApi = (playerName) => {

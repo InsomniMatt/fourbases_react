@@ -3,6 +3,12 @@
     padding-left:2EM;
     width: 588px;
     height: 300px;
+
+    .set-baseline {
+        float: left;
+        margin-left:2.5EM;
+        margin-top:5px;
+    }
 }
 
 .player-card-frame {
