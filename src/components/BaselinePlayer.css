@@ -1,8 +1,10 @@
 .footer-frame {
     position: fixed;
     width: 100%;
-    height: 200px;
+    height: 175px;
     bottom: 0px;
+    z-index: 99;
+    background-color:white;
 
     .compare-to-baseline {
         position: fixed;
@@ -22,7 +24,7 @@
     }
 }
 
-.footer-frame-left {
+.footer-master {
     position: fixed;
     height: 175px;
     left: 0px;
@@ -34,7 +36,6 @@
         position: relative;
         height: 100%;
         width: 40%;
-        float: left;
         border: 15px solid var(--primary);
 
         @media screen and (max-width: 800px) {
@@ -54,31 +55,21 @@
         &:before {
             position: absolute;
             top: 0;
-            left: 0;
             z-index: 8;
 
             border-top: 45px solid var(--primary);
-            border-right: 45px solid transparent;
         }
 
         &:after {
             position: absolute;
             top: 0;
-            left: 0;
             z-index: 5;
             border-top: 47px solid rgb(0, 0, 0);
-            border-right: 47px solid transparent;
         }
-
-        .baseline-portrait {
-            float: left;
-        }
-
 
         .team-image {
             position: absolute;
             z-index: 15;
-            left: 0.50EM;
             top: 0px;
             height: 2.5EM;
         }
@@ -86,16 +77,13 @@
         .player-image {
             position: absolute;
             top: 0;
-            left: 0;
             z-index: 2;
             height: 90%;
-            /*width: 196px;*/
             border: 2px rgb(0, 0, 0) solid;
-
         }
 
         .player-name {
-            width: 100%;
+            width: 99.25%;
             left: 20px;
             text-align: center;
             height: 15px;
@@ -112,54 +100,70 @@
             }
         }
 
-        .baseline-section-right {
-            /*width: 100%;*/
-        }
-
         .stats-table {
             display: table;
             border: 1px solid #ccc;
             border-spacing: 0;
             width: 80%;
+        }
+    }
+}
+
+.footer-left {
+    .baseline-player-card-frame {
+        float: left;
+
+        &:before {
+            left: 0;
+        }
+
+        &:after {
+            left: 0;
+        }
+
+        &:before {
+            border-right: 45px solid transparent;
+        }
+
+        &:after {
+            border-right: 47px solid transparent;
+        }
+
+        .baseline-portrait {
+            float: left;
+        }
+
+        .team-image {
+            left: 0.50EM;
+        }
+
+        .player-image {
+            left: 0;
+        }
+
+        .stats-table {
             margin-left: 20%;
         }
     }
 }
 
-.footer-frame-right {
-    position: fixed;
-    height: 150px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    border: 15px solid var(--primary);
-
+.footer-right {
     .baseline-player-card-frame {
-        height: 100%;
-        width: 40%;
         float: right;
-        border: 15px solid var(--primary);
 
-        &:before, &:after {
-            content: '';
+        &:before {
+            right: 0;
+        }
+
+        &:after {
+            right: 0;
         }
 
         &:before {
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 8;
-
-            border-top: 45px solid var(--primary);
             border-left: 45px solid transparent;
         }
 
         &:after {
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 5;
-            border-top: 47px solid rgb(0, 0, 0);
             border-left: 47px solid transparent;
         }
 
@@ -167,61 +171,16 @@
             float: right;
         }
 
-
-
         .team-image {
-            position: absolute;
-            z-index: 15;
             right: 0.50EM;
-            top: 0px;
-            height: 2.5EM;
         }
 
         .player-image {
-            position: absolute;
-            top: 0;
             right: 0;
-            z-index: 2;
-            height: 100%;
-            /*width: 196px;*/
-            border: 2px rgb(0, 0, 0) solid;
-
-        }
-
-        .player-name {
-            width:100%;
-            left: 20px;
-            text-align: center;
-            height:15px;
-            background: var(--secondary);
-            border: 2px rgb(0, 0, 0) solid;
-            z-index: 10;
-
-            .player-name-container {
-                position: relative;
-                bottom: 2.5px;
-                margin-left: 15px;
-                margin-right: 15px;
-                font-size: 10px;
-            }
         }
 
         .stats-table {
-            display: table;
-            border: 1px solid #ccc;
-            border-spacing: 0;
-            width: 80%;
             margin-right: 20%;
         }
     }
-}
-
-
-
-.baseline-comparison-frame {
-    width:20%;
-    border: 15px solid var(--primary);
-    position: fixed;
-    height: 150px;
-    bottom: 0px;
 }

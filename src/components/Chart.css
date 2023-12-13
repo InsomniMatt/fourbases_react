@@ -4,4 +4,8 @@
 
 .stat-selector {
     margin-top: 0.5EM;
+
+    .stat-button {
+        margin-left:10px;
+    }
 }

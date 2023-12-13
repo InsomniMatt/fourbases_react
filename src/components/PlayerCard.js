@@ -29,7 +29,7 @@ const PlayerCard = ({activePlayer}) => {
           <div className="player-stats" style={styles} >
             {statType === "pitching" ? <PitcherCard player={activePlayer}></PitcherCard> : <HitterCard player={activePlayer}></HitterCard> }
           </div>
-          <button onClick={setBaselinePlayer}>Set Baseline</button>
+          <button class="set-baseline" onClick={setBaselinePlayer}>Set Baseline</button>
         </div>
     )
   }

@@ -2,6 +2,7 @@ import "./BaselinePlayer.css";
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {setRollingStats} from "../features/rollingStats/rollingStatsSlice";
+import {setChartMode} from "../features/chartMode/chartModeSlice";
 import fourBases from "../request.js";
 
 const BaselinePlayer = () => {
@@ -30,6 +31,7 @@ const BaselinePlayer = () => {
     return fourBases("/players/" + activePlayer.info.playerId + "/compare_to_baseline", {baseline_id: baselinePlayer.info.playerId})
         .then(response => response.json())
         .then((data) => {
+          dispatch(setChartMode("comparison"));
           dispatch(setRollingStats(data.comparison));
         })
   }
@@ -55,7 +57,7 @@ const BaselinePlayer = () => {
   }
 
   const renderFooter = (player, side) => {
-    let className = "footer-frame-" + side;
+    let className = "footer-master footer-" + side;
     if (player && Object.keys(player).length > 0) {
       return (
           <div className={className}>
@@ -64,7 +66,7 @@ const BaselinePlayer = () => {
                 <img className="team-image" src={player.info.teamLogo} alt=""></img>
                 <img className="player-image" src={player.portrait} alt=""></img>
               </div>
-              <div className="baseline-section-right">
+              <div className="baseline-section">
                 <div className="player-name">
                   <span className="player-name-container">{player.info.playerName}</span>
                 </div>
