@@ -16,6 +16,7 @@
 
         .compare-button {
             margin-top: 40%;
+            min-width:6EM;
             width: 80%;
         }
     }
@@ -35,6 +36,16 @@
         width: 40%;
         float: left;
         border: 15px solid var(--primary);
+
+        @media screen and (max-width: 800px) {
+            width:105px;
+        }
+
+        .baseline-section {
+            @media screen and (max-width: 800px) {
+                display: none;
+            }
+        }
 
         &:before, &:after {
             content: '';
