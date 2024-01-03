@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useDispatch, useSelector } from 'react-redux';
 import { setActive } from '../features/activePlayer/activePlayerSlice';
+import { setBaseline } from '../features/baselinePlayer/baselinePlayerSlice';
+import { setChartMode } from '../features/chartMode/chartModeSlice';
+import { setRollingStats } from '../features/rollingStats/rollingStatsSlice';
+
 import SearchResults from './SearchResults';
 import PlayerCard from './PlayerCard';
 import "./PlayerSearch.css";
@@ -32,28 +36,38 @@ const PlayerSearch = () => {
 
   React.useEffect(() => {
     const searchPlayers = async() => {
-      selectPlayerCallback(activePlayer);
       if (debouncedSearchValue) {
-        await searchPlayerApi(debouncedSearchValue);
+        // Guard against researching for the active player
+        if (!(activePlayer && Object.keys(activePlayer).length > 0 && activePlayer.info.playerName == debouncedSearchValue)) {
+          await searchPlayerApi(debouncedSearchValue);
+        }
       }
     }
     searchPlayers();
   }, [debouncedSearchValue]);
 
-  const selectPlayerCallback = (playerData) => {
-    dispatch(setActive(playerData));
+  const playerSelected = (playerData) => {
+    setSearchValue(playerData.info.playerName);
   }
 
   const clearResults = () => {
     setResults([]);
   }
 
+  const resetData = () => {
+    clearResults();
+    setSearchValue("");
+    dispatch(setActive({}));
+    dispatch(setBaseline({}));
+    dispatch(setChartMode("player"));
+    dispatch(setRollingStats({}));
+  }
+
   return (
       <header className="player-search">
-        <input className="player-search-input" placeholder="Player Name" onChange={handleChange}>
-        </input>
-        {results.length > 0 && <SearchResults results={results} clearResults={clearResults}></SearchResults>}
-        {activePlayer && Object.keys(activePlayer).length > 0 && <PlayerCard activePlayer={activePlayer}></PlayerCard>}
+        <input className="player-search-input" placeholder="Player Name" onChange={handleChange} value={searchValue}></input>
+        {results.length > 0 && <SearchResults results={results} clearResults={clearResults} callback={playerSelected}></SearchResults>}
+        <button className="clear-data" onClick={resetData}>Reset</button>
       </header>
   )
 }

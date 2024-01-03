@@ -1,22 +1,23 @@
 .player-card {
-    padding-top:3EM;
+    padding-top:1.5EM;
     padding-left:2EM;
-    width: 588px;
     height: 300px;
 
     .set-baseline {
         float: left;
         margin-left:2.5EM;
         margin-top:5px;
+        height: 3EM;
     }
 }
 
 .player-card-frame {
     position: relative;
-    height: 300px;
-    width: 34%;
-    border: 15px solid var(--primary);
+    height: 150px;
+    width: 100px;
+    border: 7.5px solid var(--primary);
     float: left;
+    margin-bottom: 1EM;
 
     &:before, &:after {
         content: '';
@@ -28,8 +29,8 @@
         left: 0;
         z-index: 8;
 
-        border-top: 45px solid var(--primary);
-        border-right: 45px solid transparent;
+        border-top: 22.5px solid var(--primary);
+        border-right: 22.5px solid transparent;
     }
 
     &:after {
@@ -37,15 +38,15 @@
         top: 0;
         left: 0;
         z-index: 5;
-        border-top: 47px solid rgb(0, 0, 0);
-        border-right: 47px solid transparent;
+        border-top: 23.5px solid rgb(0, 0, 0);
+        border-right: 23.5px solid transparent;
     }
 
     .team-image {
         position: absolute;
         z-index: 15;
-        left: 0.50EM;
-        height: 2.5EM;
+        left: 0.25EM;
+        height: 1.25EM;
     }
 
     .player-image {
@@ -53,8 +54,8 @@
         top: 0;
         left: 0;
         z-index: 2;
-        height: 296px;
-        width: 196px;
+        height: 146px;
+        width: 96px;
         border: 2px rgb(0, 0, 0) solid;
 
     }
@@ -98,11 +99,4 @@
             top: 20%;
         }
     }
-}
-
-.player-stats {
-    margin-left: 45%;
-    height: 300px;
-    width: 100%;
-    border: 15px solid var(--primary);
 }

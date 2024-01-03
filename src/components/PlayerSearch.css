@@ -11,3 +11,10 @@
         width: 35EM;
     }
 }
+
+.clear-data {
+    margin-left: 10px;
+    height: 40px;
+    padding-top: 14px;
+    top: 2px;
+}

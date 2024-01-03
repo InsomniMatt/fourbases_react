@@ -36,10 +36,6 @@ const BaselinePlayer = () => {
         })
   }
 
-  const getStat = (stat) => {
-
-  }
-
   const renderPortrait = () => {
       let compareButton;
       if (canCompare()) {
@@ -87,37 +83,40 @@ const BaselinePlayer = () => {
   const renderStatsTable = (player) => {
     return (
         <table className="stats-table">
-          <tr>
-            <th>Year</th>
-            <th>AB</th>
-            <th>R</th>
-            <th>H</th>
-            <th>HR</th>
-            <th>RBI</th>
-            <th>SB</th>
-            <th>AVG</th>
-            <th>OBP</th>
-            <th>OPS</th>
-          </tr>
-          <tr>
-            <td>2023</td>
-            <td>{player.stats.atBats}</td>
-            <td>{player.stats.runs}</td>
-            <td>{player.stats.hits}</td>
-            <td>{player.stats.homeRuns}</td>
-            <td>{player.stats.rbi}</td>
-            <td>{player.stats.stolenBases}</td>
-            <td>{player.stats.avg}</td>
-            <td>{player.stats.obp}</td>
-            <td>{player.stats.ops}</td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>AB</th>
+              <th>R</th>
+              <th>H</th>
+              <th>HR</th>
+              <th>RBI</th>
+              <th>SB</th>
+              <th>AVG</th>
+              <th>OBP</th>
+              <th>OPS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2023</td>
+              <td>{player.stats.atBats}</td>
+              <td>{player.stats.runs}</td>
+              <td>{player.stats.hits}</td>
+              <td>{player.stats.homeRuns}</td>
+              <td>{player.stats.rbi}</td>
+              <td>{player.stats.stolenBases}</td>
+              <td>{player.stats.avg}</td>
+              <td>{player.stats.obp}</td>
+              <td>{player.stats.ops}</td>
+            </tr>
+          </tbody>
 
         </table>
     )
   }
 
   return (
-      // <PlayerPortrait></PlayerPortrait>
       renderPortrait()
   )
 }

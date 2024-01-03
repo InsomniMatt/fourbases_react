@@ -5,7 +5,7 @@ import { setActive } from '../features/activePlayer/activePlayerSlice';
 import "./SearchResults.css";
 import fourBases from "../request.js";
 
-const SearchResults = ({results, clearResults}) => {
+const SearchResults = ({results, clearResults, callback}) => {
   const dispatch = useDispatch();
   const activePlayer = useSelector((state) => state.activePlayer.value);
 
@@ -15,6 +15,7 @@ const SearchResults = ({results, clearResults}) => {
         .then(response => response.json())
         .then((playerData) => {
           dispatch(setActive(playerData));
+          callback(playerData);
           clearResults();
         })
   }
@@ -22,7 +23,7 @@ const SearchResults = ({results, clearResults}) => {
   return (
       <div className="player-search-results">
         {results.map((player) => {
-          return <PlayerPortrait player={player} eventHandler={playerSelect}></PlayerPortrait>
+          return <PlayerPortrait key={player.id} player={player} eventHandler={playerSelect}></PlayerPortrait>
         })}
       </div>
   )

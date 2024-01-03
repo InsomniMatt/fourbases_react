@@ -30,6 +30,34 @@ button:hover {
   transform: translateY(-2px);
 }
 
+.container {
+  min-height: 65EM;
+  margin-bottom: 175px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 5%;
+  margin-right: 5%;
+
+  @media screen and (max-width: 800px) {
+    margin-left: 1EM;
+    margin-right: 1EM;
+  }
+}
+
+.bottom-padding {
+  height: 175px;
+}
+
+.fourbases-logo {
+  position: absolute;
+  height: 150px;
+  top: -19px;
+  left: -14px;
+}
+
 /*@media (min-width: 768px) {*/
 /*  button {*/
 /*    padding: 16px 44px;*/
