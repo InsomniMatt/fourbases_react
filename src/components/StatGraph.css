@@ -1,0 +1,14 @@
+.stat-chart {
+    padding-bottom: 1EM;
+}
+
+.player-stat-chart {
+    height: 300px;
+    width: 45%;
+    margin-bottom: 1EM;
+    border: 15px solid var(--primary);
+
+    @media screen and (max-width: 800px) {
+        width: 30EM;
+    }
+}
