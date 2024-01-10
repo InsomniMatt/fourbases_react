@@ -100,3 +100,17 @@
         }
     }
 }
+
+.query-attributes {
+    display: block;
+    position: relative;
+    padding-top: 1EM;
+    height: 4EM;
+
+    input {
+        line-height: 1.5EM;
+        padding: 8px;
+        width: 10EM;
+    }
+}
+

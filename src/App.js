@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 
 function App() {
   const activePlayer = useSelector((state) => state.activePlayer.value);
+  const activePage = useSelector((state) => state.activePage.value);
 
   return (
     <div className="App">

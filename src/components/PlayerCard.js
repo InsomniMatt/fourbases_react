@@ -1,20 +1,30 @@
 import "./PlayerCard.css";
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { setBaseline } from '../features/baselinePlayer/baselinePlayerSlice';
-import PitcherCard from "./PitcherCard";
-import HitterCard from "./HitterCard";
 import { Tooltip } from 'react-tooltip';
-import ComparisonGraph from "./ComparisonGraph";
+import DatePicker from "react-datepicker";
+import {setStartDate, setEndDate, setGroupCount, setGroupType} from '../features/queryAttributes/queryAttributes';
+
+import HitterCard from "./HitterCard";
+import "react-datepicker/dist/react-datepicker.css";
 
 const PlayerCard = ({activePlayer}) => {
   const dispatch = useDispatch();
-  const chartMode = useSelector((state) => state.chartMode.value);
-
-  const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
+  const queryAttributes = useSelector((state) => state.queryAttributes.value);
 
   const setBaselinePlayer = () => {
     dispatch(setBaseline(activePlayer));
+  }
+
+  const handleGroupCountChange = (e) => {
+    const value = e.currentTarget.value;
+    dispatch(setGroupCount(value));
+  }
+
+  const handleGroupTypeChange = (e) => {
+    const value = e.currentTarget.value;
+    dispatch(setGroupType(value));
   }
 
   const renderCard = () => {
@@ -24,17 +34,39 @@ const PlayerCard = ({activePlayer}) => {
       )
     }
 
-    let statType = activePlayer.info.displayName;
-
     return (
         <div className="player-card">
-          <div className="row">
-            {renderPortrait()}
-            <button className="set-baseline" onClick={setBaselinePlayer} data-tooltip-id="baseline-tooltip" data-tooltip-content="Compare other players against the selected Baseline player.">Set Baseline</button>
+          <div>
+            <div className="row">
+              {renderPortrait()}
+            </div>
+            <div className="row query-attributes">
+              Start Date:
+              <DatePicker selected={Date.parse(queryAttributes.startDate)} onChange={(date) => dispatch(setStartDate(date.toString()))}></DatePicker>
+            </div>
+            <div className="row query-attributes">
+              End Date:
+              <DatePicker selected={Date.parse(queryAttributes.endDate)} onChange={(date) => dispatch(setEndDate(date.toString()))}></DatePicker>
+            </div>
+            <div className="row query-attributes">
+              Count:
+              <input className="query-attributes-input" onChange={handleGroupCountChange} value={queryAttributes.groupCount}></input>
+            </div>
+            <div className="row query-attributes">
+              Type:
+              <select className="query-attributes-input" onChange={handleGroupTypeChange} value={queryAttributes.groupType}>
+                <option>At Bats</option>
+                <option>Games</option>
+                <option>Days</option>
+              </select>
+            </div>
+            <div className="row">
+              <button className="set-baseline" onClick={setBaselinePlayer} data-tooltip-id="baseline-tooltip" data-tooltip-content="Compare other players against the selected Baseline player.">Set Baseline</button>
+            </div>
           </div>
 
           <div className="player-stats" style={styles}>
-            {statType === "pitching" ? <PitcherCard player={activePlayer}></PitcherCard> : <HitterCard player={activePlayer}></HitterCard> }
+            <HitterCard player={activePlayer}></HitterCard>
           </div>
 
           <Tooltip id="baseline-tooltip"></Tooltip>

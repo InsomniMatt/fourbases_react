@@ -18,3 +18,9 @@
     padding-top: 14px;
     top: 2px;
 }
+
+.about-link {
+    float: right;
+    margin-right: 8px;
+    margin-top: 8px;
+}

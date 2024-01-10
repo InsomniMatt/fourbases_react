@@ -63,11 +63,16 @@ const PlayerSearch = () => {
     dispatch(setRollingStats({}));
   }
 
+  const showAboutPage = () => {
+
+  }
+
   return (
       <header className="player-search">
         <input className="player-search-input" placeholder="Player Name" onChange={handleChange} value={searchValue}></input>
         {results.length > 0 && <SearchResults results={results} clearResults={clearResults} callback={playerSelected}></SearchResults>}
         <button className="clear-data" onClick={resetData}>Reset</button>
+        <a href="" className="about-link" onClick={showAboutPage}>About</a>
       </header>
   )
 }
