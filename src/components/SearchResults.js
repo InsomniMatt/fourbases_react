@@ -6,28 +6,32 @@ import {setRollingStats} from "../features/rollingStats/rollingStatsSlice";
 import "./SearchResults.css";
 import fourBases from "../request.js";
 
-const SearchResults = ({results, clearResults, callback}) => {
+const SearchResults = ({results, callback, queryCallback}) => {
   const dispatch = useDispatch();
   const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
   const chartMode = useSelector((state) => state.chartMode.value);
   const queryAttributes = useSelector((state) => state.queryAttributes.value);
   const playerSelect = (event) => {
     const playerId = event.currentTarget.attributes.player_id.value;
-    const query = queryAttributes;
-    if (chartMode === "comparison") {
-      query.baseline_id = baselinePlayer.info.playerId;
-    }
-
-    return fourBases("/players/" + playerId + "/stats", query)
-        .then(response => response.json())
+    queryCallback(playerId)
         .then((playerData) => {
-          dispatch(setActive(playerData));
-          if (playerData.comparison_stats) {
-            dispatch(setRollingStats(playerData.comparison_stats));
-          }
-          callback(playerData);
-          clearResults();
-        })
+          callback(playerData.info.playerName);
+        });
+    // const query = queryAttributes;
+    // if (chartMode === "comparison") {
+    //   query.baseline_id = baselinePlayer.info.playerId;
+    // }
+    //
+    // return fourBases("/players/" + playerId + "/stats", query)
+    //     .then(response => response.json())
+    //     .then((playerData) => {
+    //       dispatch(setActive(playerData));
+    //       if (playerData.comparison_stats) {
+    //         dispatch(setRollingStats(playerData.comparison_stats));
+    //       }
+    //       callback(playerData);
+    //       clearResults();
+    //     })
   }
 
   return (

@@ -8,10 +8,16 @@ import {setStartDate, setEndDate, setGroupCount, setGroupType} from '../features
 
 import HitterCard from "./HitterCard";
 import "react-datepicker/dist/react-datepicker.css";
+import fourBases from "../request";
+import {setActive} from "../features/activePlayer/activePlayerSlice";
+import {setRollingStats} from "../features/rollingStats/rollingStatsSlice";
 
-const PlayerCard = ({activePlayer}) => {
+const PlayerCard = ({queryCallback}) => {
   const dispatch = useDispatch();
   const queryAttributes = useSelector((state) => state.queryAttributes.value);
+  const activePlayer = useSelector((state) => state.activePlayer.value);
+  const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
+  const chartMode = useSelector((state) => state.chartMode.value);
 
   const setBaselinePlayer = () => {
     dispatch(setBaseline(activePlayer));
@@ -27,6 +33,11 @@ const PlayerCard = ({activePlayer}) => {
     dispatch(setGroupType(value));
   }
 
+  const queryStats = () => {
+    const playerId = activePlayer.info.playerId;
+    queryCallback(playerId);
+  }
+
   const renderCard = () => {
     if (Object.keys(activePlayer).length === 0) {
       return (
@@ -36,32 +47,36 @@ const PlayerCard = ({activePlayer}) => {
 
     return (
         <div className="player-card">
-          <div>
-            <div className="row">
+          <div className="player-info row flex-container">
+            <div className="player-pic">
               {renderPortrait()}
+              <button className="set-baseline" onClick={setBaselinePlayer} data-tooltip-id="baseline-tooltip" data-tooltip-content="Set this player as your Baseline.  Further queries will show data evaluated against this player's stats.">Set Baseline</button>
             </div>
-            <div className="row query-attributes">
-              Start Date:
-              <DatePicker selected={Date.parse(queryAttributes.startDate)} onChange={(date) => dispatch(setStartDate(date.toString()))}></DatePicker>
-            </div>
-            <div className="row query-attributes">
-              End Date:
-              <DatePicker selected={Date.parse(queryAttributes.endDate)} onChange={(date) => dispatch(setEndDate(date.toString()))}></DatePicker>
-            </div>
-            <div className="row query-attributes">
-              Count:
-              <input className="query-attributes-input" onChange={handleGroupCountChange} value={queryAttributes.groupCount}></input>
-            </div>
-            <div className="row query-attributes">
-              Type:
-              <select className="query-attributes-input" onChange={handleGroupTypeChange} value={queryAttributes.groupType}>
-                <option>At Bats</option>
-                <option>Games</option>
-                <option>Days</option>
-              </select>
-            </div>
-            <div className="row">
-              <button className="set-baseline" onClick={setBaselinePlayer} data-tooltip-id="baseline-tooltip" data-tooltip-content="Compare other players against the selected Baseline player.">Set Baseline</button>
+
+            <div className="query-builder">
+              <div className="query-attributes">
+                Start Date:
+                <DatePicker selected={Date.parse(queryAttributes.startDate)} onChange={(date) => dispatch(setStartDate(date.toString()))}></DatePicker>
+              </div>
+              <div className="query-attributes">
+                End Date:
+                <DatePicker selected={Date.parse(queryAttributes.endDate)} onChange={(date) => dispatch(setEndDate(date.toString()))}></DatePicker>
+              </div>
+              <div className="query-attributes">
+                Count:
+                <input className="query-attributes-input" onChange={handleGroupCountChange} value={queryAttributes.groupCount}></input>
+              </div>
+              <div className="query-attributes">
+                Type:
+                <select className="query-attributes-input" onChange={handleGroupTypeChange} value={queryAttributes.groupType}>
+                  <option>At Bats</option>
+                  <option>Games</option>
+                  <option>Days</option>
+                </select>
+              </div>
+              <div className="query-attributes">
+                <button className="query-call" onClick={queryStats}>Get Stats</button>
+              </div>
             </div>
           </div>
 

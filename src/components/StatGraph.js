@@ -11,7 +11,7 @@ const StatGraph = ({stat}) => {
       return {
         labels: activePlayer.rolling_stats.dates,
         datasets: [{
-          label: "100 AB Rolling " + stat.toUpperCase(),
+          label: graphTitle(),
           // y-axis data plotting values
           data: activePlayer.rolling_stats[stat],
           fill: false,
@@ -20,6 +20,11 @@ const StatGraph = ({stat}) => {
         }]
       };
   }
+
+  const graphTitle = () => {
+    return "Last " + activePlayer.queryAttributes.groupCount + " " + activePlayer.queryAttributes.groupType + " Rolling " + stat.toUpperCase();
+  }
+
 
   const labelCallback = (context) => {
     return context.raw + ": Last AB on " + context.label;

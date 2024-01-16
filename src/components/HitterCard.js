@@ -1,6 +1,5 @@
-import "./HitterCard.css";
 import StatGraph from "./StatGraph.js";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ComparisonGraph from "./ComparisonGraph";
 const HitterCard = () => {
   const activePlayer = useSelector((state) => state.activePlayer.value);

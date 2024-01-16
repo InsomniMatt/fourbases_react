@@ -11,7 +11,7 @@ export const activePlayerSlice = createSlice({
     },
     setStats: (state, stats) => {
       state.value.stats = stats.payload;
-    }
+    },
   }
 });
 
