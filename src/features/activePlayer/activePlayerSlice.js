@@ -8,7 +8,10 @@ export const activePlayerSlice = createSlice({
   reducers: {
     setActive: (state, player) => {
       state.value = player.payload;
-    }
+    },
+    setStats: (state, stats) => {
+      state.value.stats = stats.payload;
+    },
   }
 });
 

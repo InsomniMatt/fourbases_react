@@ -3,11 +3,17 @@
     padding-left:2EM;
     height: 300px;
 
+
+
     .set-baseline {
-        float: left;
-        margin-left:2.5EM;
         margin-top:5px;
+        width: 8.3EM;
+        font-size: 14px;
         height: 3EM;
+        position: relative;
+        display: block;
+        clear: both;
+        padding: 8px 8px;
     }
 }
 
@@ -99,4 +105,33 @@
             top: 20%;
         }
     }
+}
+
+.query-builder {
+    width: 45%;
+}
+
+.query-attributes {
+    display: block;
+    position: relative;
+    padding-top: 1EM;
+    padding-left: 5EM;
+    margin-left: auto;
+    margin-right:auto;
+    /*height: 2EM;*/
+    /*width: 15EM;*/
+}
+
+/*.col-three {*/
+/*    columns: 3;*/
+/*}*/
+
+#baseline-tooltip {
+    z-index: 99;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    height:300px;
 }

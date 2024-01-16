@@ -1,8 +1,8 @@
-.stat-chart {
+.stat-chart, comparison-chart {
     padding-bottom: 1EM;
 }
 
-.player-stat-chart {
+.player-stat-chart, .comparison-chart {
     height: 300px;
     width: 45%;
     margin-bottom: 1EM;

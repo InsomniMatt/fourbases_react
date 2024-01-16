@@ -11,7 +11,7 @@ import PlayerCard from './PlayerCard';
 import "./PlayerSearch.css";
 import fourBases from "../request.js";
 
-const PlayerSearch = () => {
+const PlayerSearch = ({queryCallback}) => {
   const dispatch = useDispatch();
   const activePlayer = useSelector((state) => state.activePlayer.value);
   let [searchValue, setSearchValue] = useState("");
@@ -21,7 +21,7 @@ const PlayerSearch = () => {
   const handleChange = (e) => {
     setSearchValue(e.currentTarget.value);
     if (e.currentTarget.value == "") {
-      clearResults();
+      setResults([]);
     }
   }
 
@@ -46,16 +46,13 @@ const PlayerSearch = () => {
     searchPlayers();
   }, [debouncedSearchValue]);
 
-  const playerSelected = (playerData) => {
-    setSearchValue(playerData.info.playerName);
-  }
-
-  const clearResults = () => {
+  const playerSelected = (playerName) => {
+    setSearchValue(playerName);
     setResults([]);
   }
 
   const resetData = () => {
-    clearResults();
+    setResults([]);
     setSearchValue("");
     dispatch(setActive({}));
     dispatch(setBaseline({}));
@@ -63,11 +60,16 @@ const PlayerSearch = () => {
     dispatch(setRollingStats({}));
   }
 
+  const showAboutPage = () => {
+
+  }
+
   return (
       <header className="player-search">
         <input className="player-search-input" placeholder="Player Name" onChange={handleChange} value={searchValue}></input>
-        {results.length > 0 && <SearchResults results={results} clearResults={clearResults} callback={playerSelected}></SearchResults>}
+        {results.length > 0 && <SearchResults results={results} callback={playerSelected} queryCallback={queryCallback}></SearchResults>}
         <button className="clear-data" onClick={resetData}>Reset</button>
+        <a href="" className="about-link" onClick={showAboutPage}>About</a>
       </header>
   )
 }

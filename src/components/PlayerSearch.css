@@ -9,6 +9,16 @@
         line-height: 1.5EM;
         padding: 8px;
         width: 35EM;
+        margin-left: auto;
+        margin-right: auto;
+
+        @media screen and (max-width: 800px) {
+            width: 25EM;
+        }
+
+        @media screen and (max-width: 650px) {
+            width: 20EM;
+        }
     }
 }
 
@@ -17,4 +27,13 @@
     height: 40px;
     padding-top: 14px;
     top: 2px;
+    @media screen and (max-width: 800px) {
+        padding: 16px 10px;
+    }
+}
+
+.about-link {
+    float: right;
+    margin-right: 8px;
+    margin-top: 8px;
 }
