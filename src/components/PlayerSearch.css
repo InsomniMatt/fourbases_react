@@ -1,3 +1,7 @@
+.search-bar {
+    display: inline-block;
+}
+
 .player-search {
     display: block;
     position: relative;
@@ -7,7 +11,7 @@
 
     .player-search-input {
         line-height: 1.5EM;
-        padding: 8px;
+        padding: 6px;
         width: 35EM;
         margin-left: auto;
         margin-right: auto;
@@ -32,8 +36,14 @@
     }
 }
 
-.about-link {
+.about-link, .home-link {
     float: right;
     margin-right: 8px;
     margin-top: 8px;
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
 }

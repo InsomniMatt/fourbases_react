@@ -8,16 +8,11 @@ import {setStartDate, setEndDate, setGroupCount, setGroupType} from '../features
 
 import HitterCard from "./HitterCard";
 import "react-datepicker/dist/react-datepicker.css";
-import fourBases from "../request";
-import {setActive} from "../features/activePlayer/activePlayerSlice";
-import {setRollingStats} from "../features/rollingStats/rollingStatsSlice";
 
 const PlayerCard = ({queryCallback}) => {
   const dispatch = useDispatch();
   const queryAttributes = useSelector((state) => state.queryAttributes.value);
   const activePlayer = useSelector((state) => state.activePlayer.value);
-  const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
-  const chartMode = useSelector((state) => state.chartMode.value);
 
   const setBaselinePlayer = () => {
     dispatch(setBaseline(activePlayer));
@@ -50,7 +45,7 @@ const PlayerCard = ({queryCallback}) => {
           <div className="player-info row flex-container">
             <div className="player-pic">
               {renderPortrait()}
-              <button className="set-baseline" onClick={setBaselinePlayer} data-tooltip-id="baseline-tooltip" data-tooltip-content="Set this player as your Baseline.  Further queries will show data evaluated against this player's stats.">Set Baseline</button>
+              {/*<button className="button set-baseline" onClick={setBaselinePlayer} data-tooltip-id="baseline-tooltip" data-tooltip-content="Set this player as your Baseline.  Further queries will show data evaluated against this player's stats.">Set Baseline</button>*/}
             </div>
 
             <div className="query-builder">
@@ -75,7 +70,7 @@ const PlayerCard = ({queryCallback}) => {
                 </select>
               </div>
               <div className="query-attributes">
-                <button className="query-call" onClick={queryStats}>Get Stats</button>
+                <button className="button query-call" onClick={queryStats}>Get Stats</button>
               </div>
             </div>
           </div>
@@ -99,9 +94,6 @@ const PlayerCard = ({queryCallback}) => {
         <div style={styles} className="player-card-frame">
           <img className="team-image" src={activePlayer.info.teamLogo} alt=""></img>
           <img className="player-image" src={activePlayer.portrait} alt=""></img>
-          {/*<div className="player-name">*/}
-          {/*  <span className="player-name-container">{activePlayer.info.playerName}</span>*/}
-          {/*</div>*/}
         </div>
     )
   }

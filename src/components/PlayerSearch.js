@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useDispatch, useSelector } from 'react-redux';
 import { setActive } from '../features/activePlayer/activePlayerSlice';
+import { setActivePage } from '../features/activePage/activePageSlice';
 import { setBaseline } from '../features/baselinePlayer/baselinePlayerSlice';
 import { setChartMode } from '../features/chartMode/chartModeSlice';
 import { setRollingStats } from '../features/rollingStats/rollingStatsSlice';
@@ -14,6 +15,7 @@ import fourBases from "../request.js";
 const PlayerSearch = ({queryCallback}) => {
   const dispatch = useDispatch();
   const activePlayer = useSelector((state) => state.activePlayer.value);
+  const activePage = useSelector((state) => state.activePage.value);
   let [searchValue, setSearchValue] = useState("");
   let [results, setResults] = useState([]);
   let debouncedSearchValue = useDebounce(searchValue, 300);
@@ -61,15 +63,34 @@ const PlayerSearch = ({queryCallback}) => {
   }
 
   const showAboutPage = () => {
+    dispatch(setActivePage("about"));
+  }
 
+  const showHomePage = () => {
+    resetData();
+    dispatch(setActivePage("home"));
+  }
+
+  const renderSearchBar = () => {
+    if (activePage === "home") {
+      return (
+          <div className="search-bar">
+            <input className="player-search-input" placeholder="Player Name" onChange={handleChange} value={searchValue}></input>
+            {results.length > 0 && <SearchResults results={results} callback={playerSelected} queryCallback={queryCallback}></SearchResults>}
+            <button className="button clear-data" onClick={resetData}>Reset</button>
+          </div>
+      )
+    } else {
+      return (
+          <div></div>
+      )
+    }
   }
 
   return (
       <header className="player-search">
-        <input className="player-search-input" placeholder="Player Name" onChange={handleChange} value={searchValue}></input>
-        {results.length > 0 && <SearchResults results={results} callback={playerSelected} queryCallback={queryCallback}></SearchResults>}
-        <button className="clear-data" onClick={resetData}>Reset</button>
-        <a href="" className="about-link" onClick={showAboutPage}>About</a>
+        {renderSearchBar()}
+        {activePage === "home" ? <button href="" className="about-link" onClick={showAboutPage}>About</button> : <button href="" className="home-link" onClick={showHomePage}>Home</button>}
       </header>
   )
 }

@@ -4,6 +4,7 @@ import './App.css';
 import PlayerSearch from './components/PlayerSearch';
 import BaselinePlayer from './components/BaselinePlayer';
 import PlayerCard from "./components/PlayerCard";
+import About from "./components/About";
 import {useDispatch, useSelector} from "react-redux";
 import fourBases from "./request";
 import {setActive} from "./features/activePlayer/activePlayerSlice";
@@ -35,15 +36,24 @@ function App() {
         })
   }
 
+  const containerClasses = () => {
+    if (activePage === "home") {
+      return "container";
+    } else {
+      return "about-container";
+    }
+  }
+
   return (
     <div className="App">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-      <div className="container">
+      <div className={containerClasses()}>
         <img className="fourbases-logo" src="/logo192.png" alt="Fourbases"></img>
         <PlayerSearch queryCallback={playerQuery}></PlayerSearch>
+        {activePage === "about" && <About></About>}
         {activePlayer && Object.keys(activePlayer).length > 0 && <PlayerCard queryCallback={playerQuery}></PlayerCard>}
       </div>
-      <BaselinePlayer></BaselinePlayer>
+      {activePage === "home" && <BaselinePlayer></BaselinePlayer>}
     </div>
   );
 }
