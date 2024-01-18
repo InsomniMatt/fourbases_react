@@ -38,12 +38,12 @@
         width: 40%;
         border: 15px solid var(--primary);
 
-        @media screen and (max-width: 800px) {
+        @media screen and (max-width: 1200px) {
             width:105px;
         }
 
         .baseline-section {
-            @media screen and (max-width: 800px) {
+            @media screen and (max-width: 1200px) {
                 display: none;
             }
         }

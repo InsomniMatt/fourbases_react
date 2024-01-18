@@ -39,7 +39,7 @@ const BaselinePlayer = () => {
   const renderPortrait = () => {
       let compareButton;
       if (canCompare()) {
-        compareButton = <button className="compare-button" onClick={compareToBaseline}>Compare</button>;
+        compareButton = <button className="button compare-button" onClick={compareToBaseline}>Compare</button>;
       }
       return (
           <div className="footer-frame">
