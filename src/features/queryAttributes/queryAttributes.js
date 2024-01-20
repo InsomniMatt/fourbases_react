@@ -6,8 +6,8 @@ export const queryAttributesSlice = createSlice({
     value: {
       startDate: "",
       endDate: "",
-      groupCount: 50,
-      groupType: "At Bats",
+      groupCount: 10,
+      groupType: "Games",
     },
   },
   reducers: {

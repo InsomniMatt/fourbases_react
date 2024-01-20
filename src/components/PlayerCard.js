@@ -9,7 +9,7 @@ import {setStartDate, setEndDate, setGroupCount, setGroupType} from '../features
 import HitterCard from "./HitterCard";
 import "react-datepicker/dist/react-datepicker.css";
 
-const PlayerCard = ({queryCallback}) => {
+const PlayerCard = ({queryCallback, teamQuery}) => {
   const dispatch = useDispatch();
   const queryAttributes = useSelector((state) => state.queryAttributes.value);
   const activePlayer = useSelector((state) => state.activePlayer.value);
@@ -29,8 +29,14 @@ const PlayerCard = ({queryCallback}) => {
   }
 
   const queryStats = () => {
-    const playerId = activePlayer.info.playerId;
-    queryCallback(playerId);
+    if (activePlayer.type == "player") {
+      const playerId = activePlayer.info.playerId;
+      queryCallback(playerId);
+    } else {
+      const teamId = activePlayer.info.teamId;
+      teamQuery(teamId);
+    }
+
   }
 
   const renderCard = () => {
