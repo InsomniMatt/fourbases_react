@@ -28,11 +28,24 @@ function App() {
         .then(response => response.json())
         .then((playerData) => {
           playerData.queryAttributes = query;
+          playerData.type = "player";
           dispatch(setActive(playerData));
           if (playerData.comparison_stats) {
             dispatch(setRollingStats(playerData.comparison_stats));
           }
           return playerData;
+        })
+  }
+
+  const teamQuery = (teamId) => {
+    const query = queryAttributes;
+    return fourBases("/teams/" + teamId + "/stats", query)
+        .then(response => response.json())
+        .then((teamData) => {
+          teamData.queryAttributes = query;
+          teamData.type = "team";
+          dispatch(setActive(teamData));
+          return teamData;
         })
   }
 
@@ -49,9 +62,9 @@ function App() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       <div className={containerClasses()}>
         <img className="fourbases-logo" src="/logo192.png" alt="Fourbases"></img>
-        <PlayerSearch queryCallback={playerQuery}></PlayerSearch>
+        <PlayerSearch queryCallback={playerQuery} teamQuery={teamQuery}></PlayerSearch>
         {activePage === "about" && <About></About>}
-        {activePlayer && Object.keys(activePlayer).length > 0 && <PlayerCard queryCallback={playerQuery}></PlayerCard>}
+        {activePlayer && Object.keys(activePlayer).length > 0 && <PlayerCard queryCallback={playerQuery} teamQuery={teamQuery}></PlayerCard>}
       </div>
       {activePage === "home" && <BaselinePlayer></BaselinePlayer>}
     </div>

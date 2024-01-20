@@ -64,7 +64,7 @@ const BaselinePlayer = () => {
               </div>
               <div className="baseline-section">
                 <div className="player-name">
-                  <span className="player-name-container">{player.info.playerName}</span>
+                  <span className="player-name-container">{player.info.playerName || player.info.teamName}</span>
                 </div>
                 <div className="baseline-stats-table">
                   {renderStatsTable(player)}
@@ -87,11 +87,13 @@ const BaselinePlayer = () => {
             <tr>
               <th>Year</th>
               <th>AB</th>
-              <th>R</th>
+              {/*<th>R</th>*/}
               <th>H</th>
+              <th>2B</th>
+              <th>3B</th>
               <th>HR</th>
-              <th>RBI</th>
-              <th>SB</th>
+              {/*<th>RBI</th>*/}
+              {/*<th>SB</th>*/}
               <th>AVG</th>
               <th>OBP</th>
               <th>OPS</th>
@@ -101,11 +103,13 @@ const BaselinePlayer = () => {
             <tr>
               <td>2023</td>
               <td>{player.stats.atBats}</td>
-              <td>{player.stats.runs}</td>
+              {/*<td>{player.stats.runs}</td>*/}
               <td>{player.stats.hits}</td>
+              <td>{player.stats.doubles}</td>
+              <td>{player.stats.triples}</td>
               <td>{player.stats.homeRuns}</td>
-              <td>{player.stats.rbi}</td>
-              <td>{player.stats.stolenBases}</td>
+              {/*<td>{player.stats.rbi}</td>*/}
+              {/*<td>{player.stats.stolenBases}</td>*/}
               <td>{player.stats.avg}</td>
               <td>{player.stats.obp}</td>
               <td>{player.stats.ops}</td>

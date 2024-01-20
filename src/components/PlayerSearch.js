@@ -8,11 +8,10 @@ import { setChartMode } from '../features/chartMode/chartModeSlice';
 import { setRollingStats } from '../features/rollingStats/rollingStatsSlice';
 
 import SearchResults from './SearchResults';
-import PlayerCard from './PlayerCard';
 import "./PlayerSearch.css";
 import fourBases from "../request.js";
 
-const PlayerSearch = ({queryCallback}) => {
+const PlayerSearch = ({queryCallback, teamQuery}) => {
   const dispatch = useDispatch();
   const activePlayer = useSelector((state) => state.activePlayer.value);
   const activePage = useSelector((state) => state.activePage.value);
@@ -31,8 +30,9 @@ const PlayerSearch = ({queryCallback}) => {
     return fourBases("/players/search", {query: playerName})
         .then(response => response.json())
         .then((data) => {
-          let searchResults = data?.players || [];
-          setResults(searchResults);
+          let playerResults = data?.players || [];
+          let teamResults = data?.teams || [];
+          setResults(teamResults.concat(playerResults));
         });
   }
 
@@ -75,8 +75,8 @@ const PlayerSearch = ({queryCallback}) => {
     if (activePage === "home") {
       return (
           <div className="search-bar">
-            <input className="player-search-input" placeholder="Player Name" onChange={handleChange} value={searchValue}></input>
-            {results.length > 0 && <SearchResults results={results} callback={playerSelected} queryCallback={queryCallback}></SearchResults>}
+            <input className="player-search-input" placeholder="MLB Player or Team Name" onChange={handleChange} value={searchValue}></input>
+            {results.length > 0 && <SearchResults results={results} callback={playerSelected} queryCallback={queryCallback} teamQuery={teamQuery}></SearchResults>}
             <button className="button clear-data" onClick={resetData}>Reset</button>
           </div>
       )

@@ -1,43 +1,41 @@
 import React from "react";
 import PlayerPortrait from './PlayerPortrait';
-import { useDispatch, useSelector } from 'react-redux';
-import { setActive } from '../features/activePlayer/activePlayerSlice';
-import {setRollingStats} from "../features/rollingStats/rollingStatsSlice";
+import TeamPortrait from './TeamPortrait';
 import "./SearchResults.css";
-import fourBases from "../request.js";
 
-const SearchResults = ({results, callback, queryCallback}) => {
-  const dispatch = useDispatch();
-  const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
-  const chartMode = useSelector((state) => state.chartMode.value);
-  const queryAttributes = useSelector((state) => state.queryAttributes.value);
+const SearchResults = ({results, callback, queryCallback, teamQuery}) => {
   const playerSelect = (event) => {
     const playerId = event.currentTarget.attributes.player_id.value;
     queryCallback(playerId)
         .then((playerData) => {
           callback(playerData.info.playerName);
         });
-    // const query = queryAttributes;
-    // if (chartMode === "comparison") {
-    //   query.baseline_id = baselinePlayer.info.playerId;
-    // }
-    //
-    // return fourBases("/players/" + playerId + "/stats", query)
-    //     .then(response => response.json())
-    //     .then((playerData) => {
-    //       dispatch(setActive(playerData));
-    //       if (playerData.comparison_stats) {
-    //         dispatch(setRollingStats(playerData.comparison_stats));
-    //       }
-    //       callback(playerData);
-    //       clearResults();
-    //     })
+  }
+
+  const teamSelect = (event) => {
+    const teamId = event.currentTarget.attributes.team_id.value;
+    teamQuery(teamId)
+        .then((teamData) => {
+          callback(teamData.info.teamName);
+        })
+  }
+
+  const renderPortrait = (result) => {
+    if (result.type === "team") {
+      return (
+          <TeamPortrait key={result.id} team={result} eventHandler={teamSelect}></TeamPortrait>
+      )
+    } else {
+      return (
+          <PlayerPortrait key={result.id} player={result} eventHandler={playerSelect}></PlayerPortrait>
+      )
+    }
   }
 
   return (
       <div className="player-search-results">
-        {results.map((player) => {
-          return <PlayerPortrait key={player.id} player={player} eventHandler={playerSelect}></PlayerPortrait>
+        {results.map((result) => {
+          return renderPortrait(result)
         })}
       </div>
   )
