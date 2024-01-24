@@ -2,11 +2,22 @@ import StatGraph from "./StatGraph.js";
 import { useSelector } from 'react-redux';
 import ComparisonGraph from "./ComparisonGraph";
 const HitterCard = () => {
-  const activePlayer = useSelector((state) => state.activePlayer.value);
+  const player = useSelector((state) => state.player.value);
+  const team = useSelector((state) => state.team.value);
   const chartMode = useSelector((state) => state.chartMode.value);
 
+  const queryResult = () => {
+    if (player && Object.keys(player).length > 0 ) {
+      return player;
+    } else if (team && Object.keys(team).length > 0 ) {
+      return team;
+    } else {
+      return {};
+    }
+  }
+
   const styles = {
-    "--primary": activePlayer.info.teamColors.primary,
+    "--primary": queryResult().info.teamColors.primary,
   }
 
   const renderGraphs = () => {
@@ -14,12 +25,12 @@ const HitterCard = () => {
       return (
           <div className="player-card-back">
             <div className="row">
-              <ComparisonGraph styles={styles} player={activePlayer} stat="avg"></ComparisonGraph>
-              <ComparisonGraph styles={styles} player={activePlayer} stat="obp"></ComparisonGraph>
+              <ComparisonGraph styles={styles} stat="avg"></ComparisonGraph>
+              <ComparisonGraph styles={styles} stat="obp"></ComparisonGraph>
             </div>
             <div className="row">
-              <ComparisonGraph styles={styles} player={activePlayer} stat="slg"></ComparisonGraph>
-              <ComparisonGraph styles={styles} player={activePlayer} stat="ops"></ComparisonGraph>
+              <ComparisonGraph styles={styles} stat="slg"></ComparisonGraph>
+              <ComparisonGraph styles={styles} stat="ops"></ComparisonGraph>
             </div>
           </div>
       )

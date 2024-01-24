@@ -5,17 +5,32 @@ import { setBaseline } from '../features/baselinePlayer/baselinePlayerSlice';
 import { Tooltip } from 'react-tooltip';
 import DatePicker from "react-datepicker";
 import {setStartDate, setEndDate, setGroupCount, setGroupType} from '../features/queryAttributes/queryAttributes';
+import {getStats} from "../features/player/playerSlice";
+import {getTeamStats} from "../features/team/teamSlice";
 
 import HitterCard from "./HitterCard";
 import "react-datepicker/dist/react-datepicker.css";
 
-const PlayerCard = ({queryCallback, teamQuery}) => {
+const PlayerCard = () => {
   const dispatch = useDispatch();
   const queryAttributes = useSelector((state) => state.queryAttributes.value);
-  const activePlayer = useSelector((state) => state.activePlayer.value);
+  const player = useSelector((state) => state.player.value);
+  const team = useSelector((state) => state.team.value);
+  const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
+  const chartMode = useSelector((state) => state.chartMode.value);
 
   const setBaselinePlayer = () => {
-    dispatch(setBaseline(activePlayer));
+    dispatch(setBaseline(player));
+  }
+
+  const queryResult = () => {
+    if (player && Object.keys(player).length > 0 ) {
+      return player;
+    } else if (team && Object.keys(team).length > 0 ) {
+      return team;
+    } else {
+      return {};
+    }
   }
 
   const handleGroupCountChange = (e) => {
@@ -28,19 +43,32 @@ const PlayerCard = ({queryCallback, teamQuery}) => {
     dispatch(setGroupType(value));
   }
 
-  const queryStats = () => {
-    if (activePlayer.type == "player") {
-      const playerId = activePlayer.info.playerId;
-      queryCallback(playerId);
+  const resourceType = () => {
+    if (player && Object.keys(player).length > 0) {
+      return "player";
     } else {
-      const teamId = activePlayer.info.teamId;
-      teamQuery(teamId);
+      return "team";
     }
+  }
 
+  const queryStats = () => {
+    const query = queryAttributes;
+
+    if (resourceType === "player") {
+      const playerId = player.info.playerId;
+      if (chartMode === "comparison") {
+        query.baseline_id = baselinePlayer.info.playerId;
+      }
+
+      dispatch(getStats({playerId: playerId, query: query}))
+    } else {
+      const teamId = team.info.teamId;
+      dispatch(getTeamStats({teamId: teamId, query: query}));
+    }
   }
 
   const renderCard = () => {
-    if (Object.keys(activePlayer).length === 0) {
+    if (Object.keys(queryResult()).length === 0) {
       return (
           <div></div>
       )
@@ -82,7 +110,7 @@ const PlayerCard = ({queryCallback, teamQuery}) => {
           </div>
 
           <div className="player-stats" style={styles}>
-            <HitterCard player={activePlayer}></HitterCard>
+            <HitterCard></HitterCard>
           </div>
 
           <Tooltip id="baseline-tooltip"></Tooltip>
@@ -91,15 +119,15 @@ const PlayerCard = ({queryCallback, teamQuery}) => {
   }
 
   const styles = {
-    "--primary": activePlayer.info.teamColors.primary,
-    "--secondary": activePlayer.info.teamColors.secondary
+    "--primary": queryResult().info.teamColors.primary,
+    "--secondary": queryResult().info.teamColors.secondary
   }
 
   const renderPortrait = () => {
     return (
         <div style={styles} className="player-card-frame">
-          <img className="team-image" src={activePlayer.info.teamLogo} alt=""></img>
-          <img className="player-image" src={activePlayer.portrait} alt=""></img>
+          <img className="team-image" src={queryResult().info.teamLogo} alt=""></img>
+          <img className="player-image" src={queryResult().portrait} alt=""></img>
         </div>
     )
   }

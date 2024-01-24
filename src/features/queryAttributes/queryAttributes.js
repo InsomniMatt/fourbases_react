@@ -22,7 +22,7 @@ export const queryAttributesSlice = createSlice({
     },
     setGroupType: (state, change) => {
       state.value.groupType = change.payload;
-    }
+    },
   }
 });
 

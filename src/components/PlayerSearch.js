@@ -1,62 +1,56 @@
 import React, { useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useDispatch, useSelector } from 'react-redux';
-import { setActive } from '../features/activePlayer/activePlayerSlice';
+import { setPlayer } from '../features/./player/playerSlice';
 import { setActivePage } from '../features/activePage/activePageSlice';
 import { setBaseline } from '../features/baselinePlayer/baselinePlayerSlice';
 import { setChartMode } from '../features/chartMode/chartModeSlice';
 import { setRollingStats } from '../features/rollingStats/rollingStatsSlice';
+import { setTerm, clearResults, searchApi } from '../features/search/searchSlice';
 
 import SearchResults from './SearchResults';
 import "./PlayerSearch.css";
-import fourBases from "../request.js";
 
-const PlayerSearch = ({queryCallback, teamQuery}) => {
+const PlayerSearch = () => {
   const dispatch = useDispatch();
-  const activePlayer = useSelector((state) => state.activePlayer.value);
+  const player = useSelector((state) => state.player.value);
+  const team = useSelector((state) => state.team.value);
   const activePage = useSelector((state) => state.activePage.value);
+  const search = useSelector((state) => state.search.value);
   let [searchValue, setSearchValue] = useState("");
-  let [results, setResults] = useState([]);
   let debouncedSearchValue = useDebounce(searchValue, 300);
 
   const handleChange = (e) => {
-    setSearchValue(e.currentTarget.value);
+    const searchTerm = e.currentTarget.value;
+    setSearchValue(searchTerm);
+    dispatch(setTerm(searchTerm));
     if (e.currentTarget.value == "") {
-      setResults([]);
+      dispatch(clearResults({}));
     }
-  }
-
-  const searchPlayerApi = (playerName) => {
-    return fourBases("/players/search", {query: playerName})
-        .then(response => response.json())
-        .then((data) => {
-          let playerResults = data?.players || [];
-          let teamResults = data?.teams || [];
-          setResults(teamResults.concat(playerResults));
-        });
   }
 
   React.useEffect(() => {
     const searchPlayers = async() => {
       if (debouncedSearchValue) {
         // Guard against researching for the active player
-        if (!(activePlayer && Object.keys(activePlayer).length > 0 && activePlayer.info.playerName == debouncedSearchValue)) {
-          await searchPlayerApi(debouncedSearchValue);
+        if (!(player && Object.keys(player).length > 0 && player.info.playerName == debouncedSearchValue) ||
+            !(team && Object.keys(team).length > 0 && team.info.teamName == debouncedSearchValue)) {
+          await dispatch(searchApi(debouncedSearchValue));
         }
       }
     }
     searchPlayers();
   }, [debouncedSearchValue]);
 
-  const playerSelected = (playerName) => {
-    setSearchValue(playerName);
-    setResults([]);
+  const resultSelected = (selected) => {
+    dispatch(setTerm(selected));
+    dispatch(clearResults({}));
   }
 
   const resetData = () => {
-    setResults([]);
+    dispatch(clearResults({}));
     setSearchValue("");
-    dispatch(setActive({}));
+    dispatch(setPlayer({}));
     dispatch(setBaseline({}));
     dispatch(setChartMode("player"));
     dispatch(setRollingStats({}));
@@ -72,11 +66,12 @@ const PlayerSearch = ({queryCallback, teamQuery}) => {
   }
 
   const renderSearchBar = () => {
+    console.log(search);
     if (activePage === "home") {
       return (
           <div className="search-bar">
-            <input className="player-search-input" placeholder="MLB Player or Team Name" onChange={handleChange} value={searchValue}></input>
-            {results.length > 0 && <SearchResults results={results} callback={playerSelected} queryCallback={queryCallback} teamQuery={teamQuery}></SearchResults>}
+            <input className="player-search-input" placeholder="MLB Player or Team Name" onChange={handleChange} value={search.term}></input>
+            <SearchResults callback={resultSelected}></SearchResults>
             <button className="button clear-data" onClick={resetData}>Reset</button>
           </div>
       )

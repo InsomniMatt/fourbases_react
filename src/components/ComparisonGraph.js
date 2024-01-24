@@ -3,10 +3,10 @@ import { Chart, registerables } from "chart.js"
 import {useSelector} from 'react-redux';
 import Graph from "./Graph";
 
-const ComparisonGraph = ({player, stat}) => {
+const ComparisonGraph = ({stat}) => {
   const rollingStats = useSelector((state) => state.rollingStats.value);
   const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
-  const activePlayer = useSelector((state) => state.activePlayer.value);
+  const player = useSelector((state) => state.player.value);
 
   const getDataObject = () => {
     return {
@@ -16,7 +16,7 @@ const ComparisonGraph = ({player, stat}) => {
         // y-axis data plotting values
         data: rollingStats[stat],
         fill: false,
-        borderColor: activePlayer.info.teamColors.primary,
+        borderColor: player.info.teamColors.primary,
         responsive:true
       },
       {
