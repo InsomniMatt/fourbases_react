@@ -1,22 +1,40 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PlayerPortrait from './PlayerPortrait';
 import TeamPortrait from './TeamPortrait';
 import "./SearchResults.css";
+import {getStats, setPlayer} from "../features/player/playerSlice";
+import {getTeamStats, setTeam} from "../features/team/teamSlice";
 
-const SearchResults = ({results, callback, queryCallback, teamQuery}) => {
+const SearchResults = ({callback}) => {
+  const dispatch = useDispatch();
+  const queryAttributes = useSelector((state) => state.queryAttributes.value);
+  const chartMode = useSelector((state) => state.chartMode.value);
+  const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
+  const searchResults = useSelector((state) => state.search.value.results);
+
   const playerSelect = (event) => {
     const playerId = event.currentTarget.attributes.player_id.value;
-    queryCallback(playerId)
+    const query = queryAttributes;
+    if (chartMode === "comparison") {
+      query.baseline_id = baselinePlayer.info.playerId;
+    }
+
+    dispatch(getStats({playerId: playerId, query: query}))
         .then((playerData) => {
-          callback(playerData.info.playerName);
+          dispatch(setTeam({}));
+          callback(playerData.payload.info.playerName);
         });
   }
 
   const teamSelect = (event) => {
     const teamId = event.currentTarget.attributes.team_id.value;
-    teamQuery(teamId)
+    const query = queryAttributes;
+
+    dispatch(getTeamStats({teamId: teamId, query: query}))
         .then((teamData) => {
-          callback(teamData.info.teamName);
+          dispatch(setPlayer({}));
+          callback(teamData.payload.info.teamName);
         })
   }
 
@@ -34,7 +52,10 @@ const SearchResults = ({results, callback, queryCallback, teamQuery}) => {
 
   return (
       <div className="player-search-results">
-        {results.map((result) => {
+        {searchResults.teams.map((result) => {
+          return renderPortrait(result)
+        })}
+        {searchResults.players.map((result) => {
           return renderPortrait(result)
         })}
       </div>

@@ -8,13 +8,24 @@ import fourBases from "../request.js";
 const BaselinePlayer = () => {
   const dispatch = useDispatch();
   const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
-  const activePlayer = useSelector((state) => state.activePlayer.value);
+  const player = useSelector((state) => state.player.value);
+  const team = useSelector((state) => state.team.value);
 
-  const styles = (player) => {
-    if (player && Object.keys(player).length > 0) {
+  const queryResult = () => {
+    if (player && Object.keys(player).length > 0 ) {
+      return player;
+    } else if (team && Object.keys(team).length > 0 ) {
+      return team;
+    } else {
+      return {};
+    }
+  }
+
+  const styles = (active) => {
+    if (active && Object.keys(active).length > 0) {
       return {
-        "--primary": player.info.teamColors.primary,
-        "--secondary": player.info.teamColors.secondary
+        "--primary": active.info.teamColors.primary,
+        "--secondary": active.info.teamColors.secondary
       };
     } else {
       return {};
@@ -23,12 +34,12 @@ const BaselinePlayer = () => {
 
   const canCompare = () => {
     return baselinePlayer && Object.keys(baselinePlayer).length > 0 &&
-        activePlayer && Object.keys(activePlayer).length > 0 &&
-        activePlayer.info.playerId != baselinePlayer.info.playerId;
+        player && Object.keys(player).length > 0 &&
+        player.info.playerId != baselinePlayer.info.playerId;
   }
 
   const compareToBaseline = () => {
-    return fourBases("/players/" + activePlayer.info.playerId + "/compare_to_baseline", {baseline_id: baselinePlayer.info.playerId})
+    return fourBases("/players/" + player.info.playerId + "/compare_to_baseline", {baseline_id: baselinePlayer.info.playerId})
         .then(response => response.json())
         .then((data) => {
           dispatch(setChartMode("comparison"));
@@ -38,16 +49,16 @@ const BaselinePlayer = () => {
 
   const renderPortrait = () => {
       let compareButton;
-      if (canCompare()) {
-        compareButton = <button className="button compare-button" onClick={compareToBaseline}>Compare</button>;
-      }
+      // if (canCompare()) {
+      //   compareButton = <button className="button compare-button" onClick={compareToBaseline}>Compare</button>;
+      // }
       return (
           <div className="footer-frame">
-            {renderFooter(activePlayer, "left")}
-            <div className="compare-to-baseline">
-              {compareButton}
-            </div>
-            {renderFooter(baselinePlayer, "right")}
+            {renderFooter(queryResult(), "left")}
+            {/*<div className="compare-to-baseline">*/}
+            {/*  {compareButton}*/}
+            {/*</div>*/}
+            {/*{renderFooter(baselinePlayer, "right")}*/}
           </div>
       )
   }

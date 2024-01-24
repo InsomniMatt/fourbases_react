@@ -5,24 +5,35 @@ import {useSelector} from 'react-redux';
 import Graph from "./Graph";
 
 const StatGraph = ({stat}) => {
-  const activePlayer = useSelector((state) => state.activePlayer.value);
+  const player = useSelector((state) => state.player.value);
+  const team = useSelector((state) => state.team.value);
+
+  const queryResult = () => {
+    if (player && Object.keys(player).length > 0 ) {
+      return player;
+    } else if (team && Object.keys(team).length > 0 ) {
+      return team;
+    } else {
+      return {};
+    }
+  }
 
   const getDataObject = () => {
       return {
-        labels: activePlayer.rolling_stats.dates,
+        labels: queryResult().rolling_stats.dates,
         datasets: [{
           label: graphTitle(),
           // y-axis data plotting values
-          data: activePlayer.rolling_stats[stat],
+          data: queryResult().rolling_stats[stat],
           fill: false,
-          borderColor: activePlayer.info.teamColors.primary,
+          borderColor: queryResult().info.teamColors.primary,
           responsive: true
         }]
       };
   }
 
   const graphTitle = () => {
-    return "Last " + activePlayer.queryAttributes.groupCount + " " + activePlayer.queryAttributes.groupType + " Rolling " + stat.toUpperCase();
+    return "Last " + queryResult().queryAttributes.groupCount + " " + queryResult().queryAttributes.groupType + " Rolling " + stat.toUpperCase();
   }
 
 

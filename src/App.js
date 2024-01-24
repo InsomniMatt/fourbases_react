@@ -5,49 +5,12 @@ import PlayerSearch from './components/PlayerSearch';
 import BaselinePlayer from './components/BaselinePlayer';
 import PlayerCard from "./components/PlayerCard";
 import About from "./components/About";
-import {useDispatch, useSelector} from "react-redux";
-import fourBases from "./request";
-import {setActive} from "./features/activePlayer/activePlayerSlice";
-import {setRollingStats} from "./features/rollingStats/rollingStatsSlice";
+import {useSelector} from "react-redux";
 
 function App() {
-  const dispatch = useDispatch();
-  const activePlayer = useSelector((state) => state.activePlayer.value);
+  const player = useSelector((state) => state.player.value);
+  const team = useSelector((state) => state.team.value);
   const activePage = useSelector((state) => state.activePage.value);
-  const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
-  const chartMode = useSelector((state) => state.chartMode.value);
-  const queryAttributes = useSelector((state) => state.queryAttributes.value);
-
-  const playerQuery = (playerId) => {
-    const query = queryAttributes;
-    if (chartMode === "comparison") {
-      query.baseline_id = baselinePlayer.info.playerId;
-    }
-
-    return fourBases("/players/" + playerId + "/stats", query)
-        .then(response => response.json())
-        .then((playerData) => {
-          playerData.queryAttributes = query;
-          playerData.type = "player";
-          dispatch(setActive(playerData));
-          if (playerData.comparison_stats) {
-            dispatch(setRollingStats(playerData.comparison_stats));
-          }
-          return playerData;
-        })
-  }
-
-  const teamQuery = (teamId) => {
-    const query = queryAttributes;
-    return fourBases("/teams/" + teamId + "/stats", query)
-        .then(response => response.json())
-        .then((teamData) => {
-          teamData.queryAttributes = query;
-          teamData.type = "team";
-          dispatch(setActive(teamData));
-          return teamData;
-        })
-  }
 
   const containerClasses = () => {
     if (activePage === "home") {
@@ -57,14 +20,22 @@ function App() {
     }
   }
 
+  const resultSelected = () => {
+    if (((player && Object.keys(player).length > 0) || (team && Object.keys(team).length > 0)) && activePage === "home") {
+      return (
+          <PlayerCard></PlayerCard>
+      )
+    }
+  }
+
   return (
     <div className="App">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       <div className={containerClasses()}>
         <img className="fourbases-logo" src="/logo192.png" alt="Fourbases"></img>
-        <PlayerSearch queryCallback={playerQuery} teamQuery={teamQuery}></PlayerSearch>
+        <PlayerSearch></PlayerSearch>
         {activePage === "about" && <About></About>}
-        {activePlayer && Object.keys(activePlayer).length > 0 && <PlayerCard queryCallback={playerQuery} teamQuery={teamQuery}></PlayerCard>}
+        {resultSelected()}
       </div>
       {activePage === "home" && <BaselinePlayer></BaselinePlayer>}
     </div>
