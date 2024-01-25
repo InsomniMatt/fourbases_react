@@ -1,4 +1,5 @@
 import React from "react";
+import { RotatingLines } from "react-loader-spinner";
 import { useDispatch, useSelector } from "react-redux";
 import PlayerPortrait from './PlayerPortrait';
 import TeamPortrait from './TeamPortrait';
@@ -11,6 +12,7 @@ const SearchResults = ({callback}) => {
   const queryAttributes = useSelector((state) => state.queryAttributes.value);
   const chartMode = useSelector((state) => state.chartMode.value);
   const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
+  const loadingData = useSelector((state) => state.search.loading);
   const searchResults = useSelector((state) => state.search.value.results);
 
   const playerSelect = (event) => {
@@ -50,8 +52,21 @@ const SearchResults = ({callback}) => {
     }
   }
 
+  const renderSpinner = () => {
+    return (
+        <RotatingLines
+            strokeColor="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="96"
+            visible={true}
+        />
+    )
+  }
+
   return (
       <div className="player-search-results">
+        {(loadingData && renderSpinner())}
         {searchResults.teams.map((result) => {
           return renderPortrait(result)
         })}

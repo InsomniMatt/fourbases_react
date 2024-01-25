@@ -66,7 +66,6 @@ const PlayerSearch = () => {
   }
 
   const renderSearchBar = () => {
-    console.log(search);
     if (activePage === "home") {
       return (
           <div className="search-bar">
