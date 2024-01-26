@@ -54,7 +54,7 @@ const PlayerCard = () => {
   const queryStats = () => {
     const query = queryAttributes;
 
-    if (resourceType === "player") {
+    if (resourceType() === "player") {
       const playerId = player.info.playerId;
       if (chartMode === "comparison") {
         query.baseline_id = baselinePlayer.info.playerId;
