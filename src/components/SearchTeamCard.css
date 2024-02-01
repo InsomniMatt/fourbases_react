@@ -1,13 +1,14 @@
-.player-portrait {
+.search-card {
     display: inline-block;
 
-    .player-portrait-image {
-        width: 4EM;
+    .search-card-image {
+        height: 6EM;
         border: 0.25EM solid #555;
         float: left;
+        background-color: #555;
     }
 
-    .player-info {
+    .team-info {
         background-color: white;
         opacity: 1;
         width: 25EM;
@@ -15,19 +16,11 @@
         border: 0.25EM solid #555;
         height: 6EM;
 
-        .player-name, .player-team, .player-position {
+        .team-name {
             padding-top: 0.5EM;
             padding-left: 0.5EM;
-            float: left;
+            text-aling: center;
         }
-
-        .player-avg, .player-hits, .player-home-runs {
-            padding-top: 0.5EM;
-            padding-right: 0.5EM;
-            float: right;
-        }
-
-
     }
 
     :hover {

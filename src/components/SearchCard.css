@@ -1,7 +1,7 @@
-.player-portrait {
+.search-card {
     display: inline-block;
 
-    .player-portrait-image {
+    .search-card-image {
         width: 4EM;
         border: 0.25EM solid #555;
         float: left;
@@ -26,8 +26,6 @@
             padding-right: 0.5EM;
             float: right;
         }
-
-
     }
 
     :hover {

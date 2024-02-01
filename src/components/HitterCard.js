@@ -12,7 +12,13 @@ const HitterCard = () => {
     } else if (team && Object.keys(team).length > 0 ) {
       return team;
     } else {
-      return {};
+      return {
+        info: {
+          teamColors: {
+            primary: "white"
+          }
+        }
+      };
     }
   }
 

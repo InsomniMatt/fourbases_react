@@ -5,9 +5,7 @@ export const getTeamStats = createAsyncThunk(
     "team/getTeamStats",
     async (ThunkArg) => {
       console.log('ThunkTeam');
-      const res = await fourBases("/teams/"+ ThunkArg.teamId + "/stats", ThunkArg.query)
-          .then(response =>  response.json());
-
+      const res = await fourBases("/teams/"+ ThunkArg.teamId + "/stats", ThunkArg.query);
       res.queryAttributes = ThunkArg.query;
       return res;
     }

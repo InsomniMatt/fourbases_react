@@ -62,6 +62,10 @@
   left: -14px;
 }
 
+.clear-both {
+  clear: both;
+}
+
 /*@media (min-width: 768px) {*/
 /*  button {*/
 /*    padding: 16px 44px;*/
