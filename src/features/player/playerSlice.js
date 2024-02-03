@@ -4,8 +4,7 @@ import fourBases from "../../request";
 export const getStats = createAsyncThunk(
     "player/getStats",
     async (ThunkArg) => {
-      const res = await fourBases("/players/" + ThunkArg.playerId + "/stats", ThunkArg.query)
-          .then(response =>  response.json());
+      const res = await fourBases("/players/" + ThunkArg.playerId + "/stats", ThunkArg.query);
 
       res.queryAttributes = ThunkArg.query;
       return res;
@@ -25,14 +24,13 @@ export const playerSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getStats.pending, (state) => {
       state.loading = true;
+      state.status = "loading";
     });
     builder.addCase(getStats.fulfilled, (state, {payload}) => {
-      console.log('success');
       state.loading = false;
       state.value = payload;
     });
     builder.addCase(getStats.rejected, (state, {payload}) => {
-      console.log('error');
       state.loading = false;
     });
   }

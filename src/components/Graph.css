@@ -4,11 +4,10 @@
 
 .player-stat-chart, .comparison-chart {
     height: 300px;
-    width: 45%;
-    margin-bottom: 1EM;
+    width: calc(50% - 30px);
     border: 15px solid var(--primary);
 
     @media screen and (max-width: 800px) {
-        width: 30EM;
+        width: calc(100% - 30px);
     }
 }

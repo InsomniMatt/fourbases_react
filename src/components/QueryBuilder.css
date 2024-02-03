@@ -1,0 +1,10 @@
+.query-builder {
+    height: 175px;
+    width: 100%;
+    border: 15px solid var(--secondary);
+    position: relative;
+}
+
+.query-attributes {
+    margin-top: 0.5EM;
+}

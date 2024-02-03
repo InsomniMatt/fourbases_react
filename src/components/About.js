@@ -3,7 +3,7 @@ import "./About.css";
 
 const About = () => {
   return (
-      <div>
+      <div className="about-container">
         <h3>About FourBases</h3>
         <p>
           FourBases is a portfolio project currently under development using React, Redux, Ruby on Rails and the Statcast API.<br/>
@@ -16,8 +16,8 @@ const About = () => {
         <h3>About the Developer</h3>
         <object className="resume" data="Woodard-Resume.pdf" type="application/pdf">
         </object>
-
       </div>
+
   )
 }
 

@@ -30,15 +30,6 @@
   transform: translateY(-2px);
 }
 
-.container {
-  min-height: 70EM;
-  margin-bottom: 175px;
-
-  @media screen and (max-width: 800px) {
-    min-height: 115EM;
-  }
-}
-
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -51,15 +42,15 @@
   }
 }
 
-.bottom-padding {
-  height: 175px;
-}
-
 .fourbases-logo {
   position: absolute;
   height: 150px;
   top: -19px;
   left: -14px;
+}
+
+.clear-both {
+  clear: both;
 }
 
 /*@media (min-width: 768px) {*/

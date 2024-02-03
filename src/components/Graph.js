@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Chart, registerables } from "chart.js"
 import { Line } from "react-chartjs-2";
 import "./Graph.css";

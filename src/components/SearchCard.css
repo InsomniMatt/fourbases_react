@@ -1,7 +1,7 @@
-.player-portrait {
+.search-card {
     display: inline-block;
 
-    .player-portrait-image {
+    .search-card-image {
         width: 4EM;
         border: 0.25EM solid #555;
         float: left;
@@ -15,8 +15,16 @@
         border: 0.25EM solid #555;
         height: 6EM;
 
-        .player-name {
-            padding-top: 1.5EM;
+        .player-name, .player-team, .player-position {
+            padding-top: 0.5EM;
+            padding-left: 0.5EM;
+            float: left;
+        }
+
+        .player-avg, .player-hits, .player-home-runs {
+            padding-top: 0.5EM;
+            padding-right: 0.5EM;
+            float: right;
         }
     }
 

@@ -5,9 +5,7 @@ export const searchApi = createAsyncThunk(
     "searchApi",
     async (ThunkArg) => {
 
-      const res = await fourBases("/players/search", {query: ThunkArg})
-          .then(response =>  response.json());
-
+      const res = await fourBases("/players/search", {query: ThunkArg});
       return res;
     }
 )
