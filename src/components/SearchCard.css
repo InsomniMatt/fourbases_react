@@ -18,13 +18,13 @@
         .player-name, .player-team, .player-position {
             padding-top: 0.5EM;
             padding-left: 0.5EM;
-            float: left;
+            float: left !important;
         }
 
         .player-avg, .player-hits, .player-home-runs {
             padding-top: 0.5EM;
             padding-right: 0.5EM;
-            float: right;
+            float: right !important;
         }
     }
 
