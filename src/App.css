@@ -30,15 +30,6 @@
   transform: translateY(-2px);
 }
 
-.container {
-  min-height: 70EM;
-  margin-bottom: 175px;
-
-  @media screen and (max-width: 800px) {
-    min-height: 115EM;
-  }
-}
-
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -49,10 +40,6 @@
     margin-left: 1EM;
     margin-right: 1EM;
   }
-}
-
-.bottom-padding {
-  height: 175px;
 }
 
 .fourbases-logo {

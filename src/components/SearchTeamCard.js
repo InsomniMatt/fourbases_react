@@ -15,9 +15,7 @@ const SearchTeamCard = ({ team }) => {
         .then((teamData) => {
           navigate("/teams/" + team.id)
           dispatch(setTerm(team.name));
-          console.log(teamData);
         })
-
   }
 
   const renderTeamInfo = () => {

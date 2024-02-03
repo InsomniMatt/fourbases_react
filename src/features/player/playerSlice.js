@@ -24,14 +24,13 @@ export const playerSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getStats.pending, (state) => {
       state.loading = true;
+      state.status = "loading";
     });
     builder.addCase(getStats.fulfilled, (state, {payload}) => {
-      console.log('test');
       state.loading = false;
       state.value = payload;
     });
     builder.addCase(getStats.rejected, (state, {payload}) => {
-      console.log('error');
       state.loading = false;
     });
   }

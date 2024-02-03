@@ -4,8 +4,8 @@ export const queryAttributesSlice = createSlice({
   name: "dateRange",
   initialState: {
     value: {
-      startDate: "",
-      endDate: "",
+      startDate: new Date("03/31/2023").toString(),
+      endDate: new Date("10/02/2023").toString(),
       groupCount: 10,
       groupType: "Games",
     },

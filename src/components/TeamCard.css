@@ -1,10 +1,10 @@
-.player-card {
+.team-card {
     padding-top:1.5EM;
     padding-left:2EM;
     height: 300px;
 }
 
-.player-card-frame {
+.team-card-frame {
     position: relative;
     height: 150px;
     width: 100px;
@@ -35,9 +35,9 @@
         border-right: 23.5px solid transparent;
     }
 
-    .player-image {
+    .team-image {
         position: absolute;
-        background-color: white;
+        background: white;
         top: 0;
         left: 0;
         z-index: 2;
@@ -47,7 +47,7 @@
 
     }
 
-    .player-name {
+    .team-name {
         position: absolute;
         bottom: -10px;
         right: 0;
@@ -81,29 +81,13 @@
             border-left: 17px solid transparent;
         }
 
-        .player-name-container {
+        .team-name-container {
             position: relative;
             top: 20%;
         }
     }
 }
 
-.player-stats {
+.team-stats {
     width: 100%;
-}
-
-
-
-/*.col-three {*/
-/*    columns: 3;*/
-/*}*/
-
-#baseline-tooltip {
-    z-index: 99;
-}
-
-.flex-container {
-    display: flex;
-    flex-direction: row;
-    height:300px;
 }

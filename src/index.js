@@ -26,10 +26,6 @@ const router = createBrowserRouter([
         element: <About />
       },
       {
-        path: "/players",
-        element: <CardIndex />
-      },
-      {
         path: "/players/:playerId",
         element: <PlayerCard />
       },

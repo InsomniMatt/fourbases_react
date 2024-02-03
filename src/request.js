@@ -4,7 +4,7 @@ const fourBases = (path, query={}) => {
   let headers = new Headers({'Authorization': 'Token token="' + process.env.REACT_APP_FOURBASES_TOKEN + '"'});
   return fetch(url, {headers: headers})
       .then((response) => {
-        if (response.status != 200) {
+        if (response.status !== 200) {
           throw response.statusText;
         }
         return response.json();

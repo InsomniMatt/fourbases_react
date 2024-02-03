@@ -1,13 +1,10 @@
 import "./BaselinePlayer.css";
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setRollingStats} from "../features/rollingStats/rollingStatsSlice";
-import {setChartMode} from "../features/chartMode/chartModeSlice";
 import fourBases from "../request.js";
 
 const BaselinePlayer = () => {
   const dispatch = useDispatch();
-  const baselinePlayer = useSelector((state) => state.baselinePlayer.value);
   const player = useSelector((state) => state.player.value);
   const team = useSelector((state) => state.team.value);
 
@@ -32,20 +29,15 @@ const BaselinePlayer = () => {
     }
   }
 
-  const canCompare = () => {
-    return baselinePlayer && Object.keys(baselinePlayer).length > 0 &&
-        player && Object.keys(player).length > 0 &&
-        player.info.playerId != baselinePlayer.info.playerId;
-  }
 
-  const compareToBaseline = () => {
-    return fourBases("/players/" + player.info.playerId + "/compare_to_baseline", {baseline_id: baselinePlayer.info.playerId})
-        .then(response => response.json())
-        .then((data) => {
-          dispatch(setChartMode("comparison"));
-          dispatch(setRollingStats(data.comparison));
-        })
-  }
+  // const compareToBaseline = () => {
+  //   return fourBases("/players/" + player.info.playerId + "/compare_to_baseline", {baseline_id: baselinePlayer.info.playerId})
+  //       .then(response => response.json())
+  //       .then((data) => {
+  //         dispatch(setChartMode("comparison"));
+  //         dispatch(setRollingStats(data.comparison));
+  //       })
+  // }
 
   const renderPortrait = () => {
       let compareButton;
@@ -53,8 +45,8 @@ const BaselinePlayer = () => {
       //   compareButton = <button className="button compare-button" onClick={compareToBaseline}>Compare</button>;
       // }
       return (
-          <div className="footer-frame">
-            {renderFooter(queryResult(), "left")}
+          <div>
+            {renderFooter(player)}
             {/*<div className="compare-to-baseline">*/}
             {/*  {compareButton}*/}
             {/*</div>*/}
@@ -63,11 +55,10 @@ const BaselinePlayer = () => {
       )
   }
 
-  const renderFooter = (player, side) => {
-    let className = "footer-master footer-" + side;
+  const renderFooter = (player) => {
     if (player && Object.keys(player).length > 0) {
       return (
-          <div className={className}>
+          <div>
             <div style={styles(player)} className="baseline-player-card-frame">
               <div className="baseline-portrait">
                 <img className="team-image" src={player.info.teamLogo} alt=""></img>

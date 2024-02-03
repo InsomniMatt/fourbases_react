@@ -1,3 +1,4 @@
+import "./QueryBuilder.css";
 import DatePicker from "react-datepicker";
 import {useDispatch, useSelector} from "react-redux";
 import {setEndDate, setGroupCount, setGroupType, setStartDate} from "../features/queryAttributes/queryAttributes";
@@ -6,7 +7,7 @@ import {getTeamStats} from "../features/team/teamSlice";
 import React from "react";
 
 
-const QueryBuilder = () => {
+const QueryBuilder = ({styles}) => {
   const dispatch = useDispatch();
   const queryAttributes = useSelector((state) => state.queryAttributes.value);
   const player = useSelector((state) => state.player.value);
@@ -43,7 +44,7 @@ const QueryBuilder = () => {
   }
 
   return (
-      <div className="query-builder">
+      <div className="query-builder" style={styles}>
         <div className="query-attributes">
           Start Date:
           <DatePicker selected={Date.parse(queryAttributes.startDate)} onChange={(date) => dispatch(setStartDate(date.toString()))}></DatePicker>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, useOutlet } from "react-router-dom";
+import { useOutlet } from "react-router-dom";
 import './App.css';
 
 import PlayerSearch from './components/PlayerSearch';
@@ -17,7 +17,6 @@ function App() {
           {outlet || <CardIndex />}
         </div>
       </div>
-      {/*{activePage === "home" && <BaselinePlayer></BaselinePlayer>}*/}
     </div>
   );
 }

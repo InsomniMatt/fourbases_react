@@ -5,8 +5,6 @@ import "./SearchCard.css"
 import {getStats} from "../features/player/playerSlice";
 import { setTerm } from '../features/search/searchSlice';
 
-
-
 const SearchCard = ({ player }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,11 +17,9 @@ const SearchCard = ({ player }) => {
   const eventHandler = () => {
     dispatch(getStats({playerId: player.info.id, query: queryAttributes}))
         .then((playerData) => {
-          navigate("/players/" + player.info.id);
           dispatch(setTerm(player.info.name));
-          console.log(playerData);
-        })
-
+          navigate("/players/" + player.info.id);
+        });
   }
 
   const renderPlayerInfo = () => {

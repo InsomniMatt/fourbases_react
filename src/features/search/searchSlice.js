@@ -10,15 +10,6 @@ export const searchApi = createAsyncThunk(
     }
 )
 
-export const defaultSearch = createAsyncThunk(
-    "defaultSearch",
-    async (ThunkArg) => {
-      const res = await fourBases("/players/trending");
-
-      return res;
-    }
-)
-
 export const searchSlice = createSlice({
   name: "search",
   initialState: {
@@ -48,18 +39,6 @@ export const searchSlice = createSlice({
       state.value.results = payload;
     });
     builder.addCase(searchApi.rejected, (state, {payload}) => {
-      console.log('error');
-      state.loading = false;
-    });
-    builder.addCase(defaultSearch.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(defaultSearch.fulfilled, (state, {payload}) => {
-      console.log('success');
-      state.loading = false;
-      state.value.results = payload;
-    });
-    builder.addCase(defaultSearch.rejected, (state, {payload}) => {
       console.log('error');
       state.loading = false;
     });
